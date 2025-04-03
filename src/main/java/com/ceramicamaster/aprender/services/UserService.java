@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.ceramicamaster.aprender.entities.User;
 import com.ceramicamaster.aprender.repositories.UserRepository;
+import com.ceramicamaster.aprender.services.exceptions.ResourceNotFoundException;
 
 @Component
 public class UserService {
@@ -21,7 +22,7 @@ public class UserService {
 
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	public User insert(User obj) {
